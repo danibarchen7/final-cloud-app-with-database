@@ -134,7 +134,7 @@ class Enrollment(models.Model):
 #    Other fields and methods you would like to design
 class Question(models.Model):
     question = models.CharField(null=False, max_length=200, default='first question')
-    grade = models.IntegerField
+    grade = models.IntegerField(default=50)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     
     # users = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Enrollment')
@@ -142,8 +142,7 @@ class Question(models.Model):
     # is_enrolled = False
 
     def __str__(self):
-        return "Question: " + self.question + "," + \
-               "Grade: " + self.grade
+        return "Question: " + self.question 
 
     def is_get_score(self, selected_ids):
        all_answers = self.choice_set.filter(is_correct=True).count()
@@ -157,7 +156,7 @@ class Question(models.Model):
 class Choice(models.Model):
     choice = models.CharField(null=False, max_length=200, default='first question')
     # grade = models.IntegerField(null=false, maz_length=10)
-    question = models.ForeignKey(Course, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     # users = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Enrollment')
     # total_enrollment = models.IntegerField(default=0)
     # is_enrolled = False
